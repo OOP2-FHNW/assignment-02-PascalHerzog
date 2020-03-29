@@ -87,10 +87,8 @@ public class TransactionList {
     public int highestValue() {
         return allTransactions.stream()
                 .max(Comparator.comparingInt(Transaction::getValue))
-                .stream() //doesn't throw exception if Transaction is not present
-                .collect(Collectors.toList())
-                .get(0)
-                .getValue();
+                .map(Transaction::getValue)
+                .orElse(0);
     }
 
     /**
@@ -106,13 +104,9 @@ public class TransactionList {
      * @return the Transaction with the lowest value
      */
     public Transaction getLowestValueTransaction(){
-
         return allTransactions.stream()
                 .min(Comparator.comparingInt(Transaction::getValue))
-                .stream() //doesn't throw exception if Transaction is not present
-                .collect(Collectors.toList())
-                .get(0);
-
+                .orElse(null);
     }
 
     /**
